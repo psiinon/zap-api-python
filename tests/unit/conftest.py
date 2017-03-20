@@ -7,7 +7,7 @@ from zapv2 import ZAPv2
 def zap():
     """
     All tests will be able to share the instance of client with the same settings."""
-    yield ZAPv2()
+    yield ZAPv2(apikey='testapikey')
 
 
 @pytest.yield_fixture

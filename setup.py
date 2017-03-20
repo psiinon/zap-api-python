@@ -15,17 +15,18 @@ except ImportError:
 test_requirements = [
     'mock',
     'pylama',
-    'pytest'
+    'pytest',
+    'requests'
 ]
 setup(
     name="python-owasp-zap-v2.4",
-    version="0.0.9.dev1",
-    description="OWASP ZAP 2.5 API client",
-    long_description="OWASP Zed Attack Proxy 2.5 API python client (the 2.4 package name has been kept to make it easier to upgrade)",
+    version="0.0.9",
+    description="OWASP ZAP 2.6 API client",
+    long_description="OWASP Zed Attack Proxy 2.6 API python client (the 2.4 package name has been kept to make it easier to upgrade)",
     author="ZAP development team",
     author_email='',
     url="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project",
-    download_url="https://github.com/zaproxy/zap-api-python/releases/tag/0.0.8",
+    download_url="https://github.com/zaproxy/zap-api-python/releases/tag/0.0.9",
     platforms=['any'],
 
     license="ASL2.0",

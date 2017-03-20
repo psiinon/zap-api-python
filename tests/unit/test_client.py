@@ -17,23 +17,38 @@ def test_urlopen_proxies(zap, urllib_mock):
     assert urllib_mock.mock_calls[0][2]['proxies'] == TEST_PROXIES
 
 
-def test_request_response(zap, urllib_mock):
+def test_urlopen(zap, urllib_mock):
     """Request method should return a python object from parsed output"""
     urllib_mock.return_value.read.return_value = '{"testkey": "testvalue"}'
 
-    assert zap._request('http://allizom.org', {'querykey': 'queryvalue'}) == {'testkey': 'testvalue'}
+    assert zap.urlopen('http://allizom.org', {'querykey': 'queryvalue'}) == {'testkey': 'testvalue'}
     assert urllib_mock.mock_calls == [
         call('http://allizom.org?querykey=queryvalue', proxies=TEST_PROXIES),
         call().read()
     ]
+    # TODO check the api key is not set
+
+
+def test_request_response(zap, urllib_mock):
+    """Request method should return a python object from parsed output"""
+    urllib_mock.return_value.read.return_value = '{"testkey": "testvalue"}'
+
+    assert zap._request('http://zap/test', {'querykey': 'queryvalue'}) == {'testkey': 'testvalue'}
+    assert urllib_mock.mock_calls == [
+        call('http://zap/test?querykey=queryvalue', proxies=TEST_PROXIES),
+        call().read()
+    ]
+    # TODO check the api key is set in url and header
 
 
 def test_request_other(zap, urllib_mock):
     """_request_other should simply return a retrieved content."""
     urllib_mock.return_value.read.return_value = '{"testkey": "testvalue"}'
 
-    assert zap._request('http://allizom.org', {'querykey': 'queryvalue'}) == {'testkey': 'testvalue'}
+    assert zap._request_other('http://zap/test', {'querykey': 'queryvalue'}) == {'testkey': 'testvalue'}
     assert urllib_mock.mock_calls == [
-        call('http://allizom.org?querykey=queryvalue', proxies=TEST_PROXIES),
+        call('http://zap/test?querykey=queryvalue', proxies=TEST_PROXIES),
         call().read()
     ]
+    # TODO check the api key is set in url and header
+    
