@@ -1,7 +1,9 @@
-from mock import patch
 import pytest
 
+import requests_mock
+
 from zapv2 import ZAPv2
+
 
 @pytest.yield_fixture
 def zap():
@@ -10,8 +12,8 @@ def zap():
     yield ZAPv2(apikey='testapikey')
 
 
-@pytest.yield_fixture
-def urllib_mock():
+@pytest.yield_fixture(autouse=True)
+def client_mock():
     """Fixture create a mock for urllib library."""
-    with patch('zapv2.urllib.urlopen') as urllib_mock:
-        yield urllib_mock
+    with requests_mock.mock() as mock:
+        yield mock

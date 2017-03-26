@@ -12,12 +12,16 @@ except ImportError:
     print "You must have setuptools installed to use setup.py. Exiting..."
     raise SystemExit(1)
 
-test_requirements = [
+
+install_dependencies = (
+    'requests'
+)
+test_requirements = (
     'mock',
     'pylama',
     'pytest',
-    'requests'
-]
+    'requests_mock'
+)
 setup(
     name="python-owasp-zap-v2.4",
     version="0.0.9",
@@ -44,7 +48,7 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'Programming Language :: Python'],
-
+    install_requires=install_dependencies,
     tests_require=test_requirements,
     extras_require={'tests': test_requirements}
 )

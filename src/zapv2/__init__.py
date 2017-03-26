@@ -24,7 +24,6 @@ __docformat__ = 'restructuredtext'
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from urlparse import urljoin
-import urllib
 
 from acsrf import acsrf
 from ascan import ascan
@@ -118,9 +117,8 @@ class ZAPv2(object):
            - `args`:  all non-keyword arguments.
            - `kwargs`: all other keyword arguments.
         """
-        kwargs['proxies'] = self.__proxies
         # Must never leak the API key via proxied requests
-        return urllib.urlopen(*args, **kwargs).read()
+        return requests.get(*args, proxies=self.__proxies, **kwargs).text
 
     def _request_api(self, url, query=None):
         """
@@ -134,12 +132,12 @@ class ZAPv2(object):
           raise ValueError('A non ZAP API url was specified ' + url)
           return;
 
-        # In theory we should be able to reuse the session, 
+        # In theory we should be able to reuse the session,
         # but there have been problems with that
         self.session = requests.Session()
         if self.__apikey is not None:
           self.session.headers['X-ZAP-API-Key'] = self.__apikey
-        
+
         query = query or {}
         if self.__apikey is not None:
           # Add the apikey to get params for backwards compatibility
